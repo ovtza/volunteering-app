@@ -44,7 +44,7 @@ public class addBox {
         GridPane.setConstraints(typeLabel, 0, 2);
         final ComboBox<String> BoxType = new ComboBox<>();
         BoxType.getItems().add("Metalowa");
-        BoxType.getItems().add("Teksturowa");
+        BoxType.getItems().add("Tekturowa");
         GridPane.setConstraints(BoxType, 1, 2);
         Button dodajButton = new Button("Dodaj");
         GridPane.setConstraints(dodajButton, 1, 3);
@@ -59,8 +59,6 @@ public class addBox {
                 actiontarget.setText("");
                 nameInput.clear();
                 codeInput.clear();
-               /* Main.this.window.setScene(Main.this.scene1);
-                Main.this.window.setTitle("Menu glowne");*/
                 App.App.getPrimaryStage().setScene(menu.menuDisplay(app));
 
                 app.setScene(menu.menuDisplay(app));

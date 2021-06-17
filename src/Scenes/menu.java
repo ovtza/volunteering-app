@@ -18,7 +18,7 @@ public class menu {
 
         final Button addVolunteerBtn = new Button("Dodaj wolontariusza");
         final Button addCompanyBtn = new Button("Dodaj firme");
-        final Button addBoxBtn = new Button("Dodaj puszek");
+        final Button addBoxBtn = new Button("Dodaj puszke");
         final Button spendBoxBtn = new Button("Wydaj puszke");
         final Button HandOverTheBoxBtn = new Button("Zdaj puszke");
         final Button reportsBtn = new Button("Raporty");
@@ -89,13 +89,14 @@ public class menu {
         spendBoxBtn.setMinWidth(Start.getPrefWidth());
         HandOverTheBoxBtn.setMinWidth(Start.getPrefWidth());
         reportsBtn.setMinWidth(Start.getPrefWidth());
-        logOutBtn.setMinWidth(Start.getPrefWidth());
-        infoBtn.setMinWidth(Start.getPrefWidth());
+        logOutBtn.setMinWidth(Start.getPrefWidth()-100D);
+        infoBtn.setMinWidth(Start.getPrefWidth()-100D);
 
 
         Start.getChildren().addAll(addVolunteerBtn, addCompanyBtn, addBoxBtn, spendBoxBtn, HandOverTheBoxBtn, reportsBtn, logOutBtn, infoBtn);
 
         menu = new Scene(Start, 650.0D, 450.0D);
+        menu.getStylesheets().add("style.css");
         App.App.getPrimaryStage().setScene(addBox.addCollectionBox(app));
         app.setScene(addBox.addCollectionBox(app));
 

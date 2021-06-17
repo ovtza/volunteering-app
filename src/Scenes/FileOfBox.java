@@ -6,7 +6,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -43,13 +45,21 @@ public class FileOfBox {
         grid.add(actiontarget, 1, 2);
         drukuj.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                File f = new File("Raporty");
-                if (f.exists() && f.isDirectory()) {
-
-                   // actiontarget.setText("");
+                File f = new File("KartotekaPuszki.pdf");
+                if (!f.exists()) {
+                   DocumentHandle.GeneratePDF.createPDF("KartotekaPuszki.pdf", "puszki");
                 } else {
                     actiontarget.setFill(Color.RED);
-                    actiontarget.setText("Brak danych!");
+                    actiontarget.setText("PDF jest juz wygenerowany");
+                }
+
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("KartotekaPuszki.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+                        // no application registered for PDFs
+                    }
                 }
             }
         });

@@ -44,8 +44,10 @@ public class login {
         ja.setOnAction(e -> Helpers.popAnnouncement.displayInfo());
         logowanie.getChildren().addAll(LoginLabel, LoginInput, hasloLabel, hasloInput, ja, Zaloguj, action);
         Scene ScenaGlowna = new Scene(logowanie, 650.0D, 450.0D);
+        ScenaGlowna.getStylesheets().add("style.css");
         Stage app = new Stage();
         App.getPrimaryStage().setScene(ScenaGlowna);
+
         app.setScene(ScenaGlowna);
         app.setTitle("Wolontariat 1.1 - Menu");
         app.show();

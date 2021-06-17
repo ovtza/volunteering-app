@@ -1,5 +1,6 @@
 package Helpers;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,9 +29,10 @@ public class confirm {
             answer = false;
             window.close();
         });
-        VBox layout = new VBox(10.0D);
+        VBox layout = new VBox(20.0D);
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(10, 10, 10, 10));
         Scene scene = new Scene(layout);
         scene.getStylesheets().add("style.css");
         window.setScene(scene);

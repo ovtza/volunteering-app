@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class SelectRecords {
 
-    private Connection connect() {
+    public Connection connect() {
         // SQLite connection string
         String url = "jdbc:sqlite:wolontariat-baza.db";
         Connection conn = null;
@@ -21,8 +21,8 @@ public class SelectRecords {
     }
 
 
-    public void selectAll(){
-        String sql = "SELECT * FROM wolontariusze";
+    public void selectAll(String Table){
+        String sql = "SELECT * FROM " + Table;
 
         try {
             Connection conn = this.connect();
@@ -32,8 +32,9 @@ public class SelectRecords {
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("id") +  "\t" +
-                        rs.getString("name") + "\t" +
-                        rs.getDouble("capacity"));
+                        rs.getString("nazwa") + "\t" +
+                        rs.getDouble("kod") + "\t" +
+                        rs.getString("rodzaj"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -42,7 +43,7 @@ public class SelectRecords {
 
     public static void main(String[] args) {
         SelectRecords app = new SelectRecords();
-        app.selectAll();
+        //app.selectAll();
     }
 
 }
