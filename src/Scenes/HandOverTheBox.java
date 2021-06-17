@@ -1,8 +1,10 @@
 package Scenes;
 
+import Database.InsertRecords;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.text.SimpleDateFormat;
@@ -31,11 +33,11 @@ public class HandOverTheBox {
         grid.setVgap(8.0D);
         grid.setHgap(10.0D);
         grid.setAlignment(Pos.CENTER);
-        Label nameLabel = new Label("Numer puszki:");
-        GridPane.setConstraints(nameLabel, 0, 0);
-        final TextField nameInput = new TextField();
-        nameInput.setPromptText("Numer puszki");
-        GridPane.setConstraints(nameInput, 1, 0);
+        Label numberLabel = new Label("Numer puszki:");
+        GridPane.setConstraints(numberLabel, 0, 0);
+        final TextField numberInput = new TextField();
+        numberInput.setPromptText("Numer puszki");
+        GridPane.setConstraints(numberInput, 1, 0);
         Label userLabel = new Label("Osoba odbieraj");
                 GridPane.setConstraints(userLabel, 0, 1);
         final TextField userInput = new TextField();
@@ -58,7 +60,7 @@ public class HandOverTheBox {
         btnmenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 actiontarget.setText("");
-                nameInput.clear();
+                numberInput.clear();
                 userInput.clear();
                 App.App.getPrimaryStage().setScene(menu.menuDisplay(app));
                 app.setScene(menu.menuDisplay(app));
@@ -67,11 +69,26 @@ public class HandOverTheBox {
         clear.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 actiontarget.setText("");
-                nameInput.clear();
+                numberInput.clear();
                 userInput.clear();
             }
         });
-        grid.getChildren().addAll(nameLabel, nameInput, userLabel, userInput, timeLabel, timeInput, dodajButton, btnmenu, actiontarget, clear);
+        dodajButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                boolean result = Helpers.confirm.display("Potwierdzenie", "Czy jestes pewien?");
+                if(result){
+                    actiontarget.setFill(Color.GREEN);
+                    actiontarget.setText("Dodano");
+                    InsertRecords zdanepuszki = new InsertRecords();
+                    zdanepuszki.insertHandOverTheBox(numberInput.getText(), userInput.getText(), timeInput.getText());
+                } else {
+                    actiontarget.setFill(Color.RED);
+                    actiontarget.setText("Anulowano");
+                }
+            }
+        });
+        grid.getChildren().addAll(numberLabel, numberInput, userLabel, userInput, timeLabel, timeInput, dodajButton, btnmenu, actiontarget, clear);
         HandOverTheBox = new Scene(grid, 650.0D, 450.0D);
         return HandOverTheBox;
     }

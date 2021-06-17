@@ -1,5 +1,6 @@
 package Scenes;
 
+import Database.InsertRecords;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,11 +28,11 @@ public class addCompany {
         final TextField nameInput = new TextField();
         nameInput.setPromptText("Nazwa firmy");
         GridPane.setConstraints(nameInput, 1, 0);
-        Label surnameLabel = new Label("Osoba reprezentujaca firme");
-        GridPane.setConstraints(surnameLabel, 0, 1);
-        final TextField surnameInput = new TextField();
-        surnameInput.setPromptText("Dane osoby");
-        GridPane.setConstraints(surnameInput, 1, 1);
+        Label PersonLabel = new Label("Osoba reprezentujaca firme");
+        GridPane.setConstraints(PersonLabel, 0, 1);
+        final TextField PersonInput = new TextField();
+        PersonInput.setPromptText("Dane osoby");
+        GridPane.setConstraints(PersonInput, 1, 1);
         Label kodLabel = new Label("Kod:");
         GridPane.setConstraints(kodLabel, 0, 2);
         final TextField kodInput = new TextField();
@@ -48,7 +50,7 @@ public class addCompany {
             public void handle(ActionEvent e) {
                 actiontarget.setText("");
                 nameInput.clear();
-                surnameInput.clear();
+                PersonInput.clear();
                 kodInput.clear();
                 App.App.getPrimaryStage().setScene(menu.menuDisplay(app));
                 app.setScene(menu.menuDisplay(app));
@@ -58,11 +60,26 @@ public class addCompany {
             public void handle(ActionEvent e) {
                 actiontarget.setText("");
                 nameInput.clear();
-                surnameInput.clear();
+                PersonInput.clear();
                 kodInput.clear();
             }
         });
-        grid.getChildren().addAll(nameLabel, nameInput, surnameLabel, surnameInput, kodLabel, kodInput, dodajButton, btnmenu, clear);
+        dodajButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                boolean result = Helpers.confirm.display("Potwierdzenie", "Czy jestes pewien?");
+                if(result){
+                    actiontarget.setFill(Color.GREEN);
+                    actiontarget.setText("Dodano");
+                    InsertRecords firma = new InsertRecords();
+                    firma.insertCompany(nameInput.getText(), PersonInput.getText(), kodInput.getText());
+                     } else {
+                    actiontarget.setFill(Color.RED);
+                    actiontarget.setText("Anulowano");
+                }
+            }
+        });
+        grid.getChildren().addAll(nameLabel, nameInput, PersonLabel, PersonInput, kodLabel, kodInput, dodajButton, btnmenu, clear);
         addCompany = new Scene(grid, 650.0D, 450.0D);
 
         return addCompany;

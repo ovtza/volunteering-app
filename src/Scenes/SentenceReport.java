@@ -58,7 +58,7 @@ public class SentenceReport {
         Label timeInput = new Label(time6);
         GridPane.setConstraints(timeInput, 1, 1);
         Button btnmenu = new Button("Wroc");
-        btnmenu.setOnAction(new EventHandler<>() {
+        btnmenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 app.setTitle("Raporty");
                 App.App.getPrimaryStage().setScene(reportsMenu.reportsMenuDisplay(app));

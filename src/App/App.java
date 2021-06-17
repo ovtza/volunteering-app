@@ -16,6 +16,8 @@ public class App extends Application {
     @Override
     public void init() throws Exception {
         System.out.println("Start");
+        Database.Create.createNewDatabase("wolontariat-baza.db");
+        Database.CreateTable.createAllTables();
     }
 
     @Override

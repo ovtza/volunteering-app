@@ -1,5 +1,6 @@
 package Scenes;
 
+import Database.InsertRecords;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -40,10 +42,10 @@ public class addBox {
         GridPane.setConstraints(codeInput, 1, 1);
         Label typeLabel = new Label("Rodzaj puszki:");
         GridPane.setConstraints(typeLabel, 0, 2);
-        final ComboBox<String> companyName = new ComboBox<>();
-        companyName.getItems().add("Metalowa");
-        companyName.getItems().add("Teksturowa");
-        GridPane.setConstraints(companyName, 1, 2);
+        final ComboBox<String> BoxType = new ComboBox<>();
+        BoxType.getItems().add("Metalowa");
+        BoxType.getItems().add("Teksturowa");
+        GridPane.setConstraints(BoxType, 1, 2);
         Button dodajButton = new Button("Dodaj");
         GridPane.setConstraints(dodajButton, 1, 3);
         Button clear = new Button("Wyczysc pola");
@@ -71,8 +73,22 @@ public class addBox {
                 codeInput.clear();
             }
         });
-
-        grid.getChildren().addAll(nameLabel, nameInput, codeLabel, codeInput, typeLabel, companyName, dodajButton, btnmenu, clear);
+        dodajButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                boolean result = Helpers.confirm.display("Potwierdzenie", "Czy jestes pewien?");
+                if(result){
+                    actiontarget.setFill(Color.GREEN);
+                    actiontarget.setText("Dodano");
+                    InsertRecords puszka = new InsertRecords();
+                    puszka.insertBox(nameInput.getText(), codeInput.getText(), BoxType.getSelectionModel().getSelectedItem());
+                } else {
+                    actiontarget.setFill(Color.RED);
+                    actiontarget.setText("Anulowano");
+                }
+            }
+        });
+        grid.getChildren().addAll(nameLabel, nameInput, codeLabel, codeInput, typeLabel, BoxType, dodajButton, btnmenu, clear);
         add = new Scene(grid, 650.0D, 450.0D);
 
         

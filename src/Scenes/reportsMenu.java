@@ -79,8 +79,6 @@ public class reportsMenu {
         app.setScene(addBox.addCollectionBox(app));
 
 
-        System.out.println("menu");
-
         return reportsMenu;
         }
     }

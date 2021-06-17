@@ -1,5 +1,6 @@
 package Scenes;
 
+import Database.InsertRecords;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -96,6 +98,22 @@ public class addVolunteer {
                 nrInput.clear();
                 kodInput.clear();
                 nruInput.clear();
+            }
+        });
+
+        dodajButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                boolean result = Helpers.confirm.display("Potwierdzenie", "Czy jestes pewien?");
+                if(result){
+                    actiontarget.setFill(Color.GREEN);
+                    actiontarget.setText("Dodano");
+                    InsertRecords wolontariusz = new InsertRecords();
+                    wolontariusz.insertVolunteer(nameInput.getText(), surnameInput.getText(), numerInput.getText(), adresInput.getText(), dataInput.getText(), nrInput.getText(),kodInput.getText(),nruInput.getText());
+                } else {
+                    actiontarget.setFill(Color.RED);
+                    actiontarget.setText("Anulowano");
+                }
             }
         });
         grid.getChildren().addAll(

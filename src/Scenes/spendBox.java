@@ -1,8 +1,10 @@
 package Scenes;
 
+import Database.InsertRecords;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.text.SimpleDateFormat;
@@ -21,16 +23,16 @@ public class spendBox {
     public static Scene spendBox(Stage app) {
         Scene spendBox;
 
-        GridPane grid4 = new GridPane();
-        grid4.setPadding(new Insets(10.0D, 10.0D, 10.0D, 10.0D));
-        grid4.setVgap(8.0D);
-        grid4.setHgap(10.0D);
-        grid4.setAlignment(Pos.CENTER);
-        Label nameLabel = new Label("Numer puszki:");
-        GridPane.setConstraints(nameLabel, 0, 0);
-        final TextField nameInput = new TextField();
-        nameInput.setPromptText("Numer puszki");
-        GridPane.setConstraints(nameInput, 1, 0);
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10.0D, 10.0D, 10.0D, 10.0D));
+        grid.setVgap(8.0D);
+        grid.setHgap(10.0D);
+        grid.setAlignment(Pos.CENTER);
+        Label numberLabel = new Label("Numer puszki:");
+        GridPane.setConstraints(numberLabel, 0, 0);
+        final TextField numberInput = new TextField();
+        numberInput.setPromptText("Numer puszki");
+        GridPane.setConstraints(numberInput, 1, 0);
         Label userLabel = new Label("Osoba wydajaca");
         GridPane.setConstraints(userLabel, 0, 1);
         final TextField userInput = new TextField();
@@ -48,11 +50,11 @@ public class spendBox {
         Button clear = new Button("Wyczysc pola");
         GridPane.setConstraints(clear, 0, 3);
         final Text actiontarget = new Text();
-        grid4.add(actiontarget, 1, 4);
+        grid.add(actiontarget, 1, 4);
         btnmenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 actiontarget.setText("");
-                nameInput.clear();
+                numberInput.clear();
                 userInput.clear();
                 App.App.getPrimaryStage().setScene(menu.menuDisplay(app));
                 app.setScene(menu.menuDisplay(app));
@@ -61,12 +63,27 @@ public class spendBox {
         clear.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 actiontarget.setText("");
-                nameInput.clear();
+                numberInput.clear();
                 userInput.clear();
             }
         });
-        grid4.getChildren().addAll(nameLabel, nameInput, userLabel, userInput, timeLabel, timeInput, dodajButton, btnmenu, clear);
-        spendBox = new Scene(grid4, 650.0D, 450.0D);
+        dodajButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                boolean result = Helpers.confirm.display("Potwierdzenie", "Czy jestes pewien?");
+                if(result){
+                    actiontarget.setFill(Color.GREEN);
+                    actiontarget.setText("Dodano");
+                    InsertRecords wydanePuszki = new InsertRecords();
+                    wydanePuszki.insertSpendBox(numberInput.getText(), userInput.getText(), timeInput.getText());
+                } else {
+                    actiontarget.setFill(Color.RED);
+                    actiontarget.setText("Anulowano");
+                }
+            }
+        });
+        grid.getChildren().addAll(numberLabel, numberInput, userLabel, userInput, timeLabel, timeInput, dodajButton, btnmenu, clear);
+        spendBox = new Scene(grid, 650.0D, 450.0D);
 
         return spendBox;
 
